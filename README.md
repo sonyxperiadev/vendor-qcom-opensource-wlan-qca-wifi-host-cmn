@@ -1,0 +1,1 @@
+# vendor-qcom-opensource-wlan-qca-wifi-host-cmn
