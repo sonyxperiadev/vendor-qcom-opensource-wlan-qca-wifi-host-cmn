@@ -1067,6 +1067,7 @@ const char *qdf_dp_code_to_string(enum QDF_DP_TRACE_ID code)
 	}
 }
 
+#ifdef WLAN_DEBUG
 /**
  * qdf_dp_dir_to_str() - convert direction to string
  * @dir: direction
@@ -1180,6 +1181,7 @@ static const char *qdf_dp_subtype_to_str(enum qdf_proto_subtype subtype)
 		return "invalid";
 	}
 }
+#endif
 
 /**
  * qdf_dp_enable_check() - check if dptrace is enable or not
@@ -1537,6 +1539,7 @@ qdf_export_symbol(qdf_dp_trace_log_pkt);
 void qdf_dp_display_mgmt_pkt(struct qdf_dp_trace_record_s *record,
 			      uint16_t index, bool live)
 {
+#ifdef WLAN_DEBUG
 	struct qdf_dp_trace_mgmt_buf *buf =
 		(struct qdf_dp_trace_mgmt_buf *)record->data;
 
@@ -1547,6 +1550,7 @@ void qdf_dp_display_mgmt_pkt(struct qdf_dp_trace_record_s *record,
 		qdf_dp_code_to_string(record->code),
 		qdf_dp_type_to_str(buf->type),
 		qdf_dp_subtype_to_str(buf->subtype));
+#endif
 }
 qdf_export_symbol(qdf_dp_display_mgmt_pkt);
 
@@ -1589,6 +1593,7 @@ qdf_export_symbol(qdf_dp_trace_mgmt_pkt);
 void qdf_dp_display_event_record(struct qdf_dp_trace_record_s *record,
 			      uint16_t index, bool live)
 {
+#ifdef WLAN_DEBUG
 	struct qdf_dp_trace_event_buf *buf =
 		(struct qdf_dp_trace_event_buf *)record->data;
 
@@ -1599,6 +1604,7 @@ void qdf_dp_display_event_record(struct qdf_dp_trace_record_s *record,
 		qdf_dp_code_to_string(record->code),
 		qdf_dp_type_to_str(buf->type),
 		qdf_dp_subtype_to_str(buf->subtype));
+#endif
 }
 qdf_export_symbol(qdf_dp_display_event_record);
 
@@ -1641,6 +1647,7 @@ qdf_export_symbol(qdf_dp_trace_record_event);
 void qdf_dp_display_proto_pkt(struct qdf_dp_trace_record_s *record,
 			      uint16_t index, bool live)
 {
+#ifdef WLAN_DEBUG
 	struct qdf_dp_trace_proto_buf *buf =
 		(struct qdf_dp_trace_proto_buf *)record->data;
 
@@ -1654,6 +1661,7 @@ void qdf_dp_display_proto_pkt(struct qdf_dp_trace_record_s *record,
 		qdf_dp_subtype_to_str(buf->subtype),
 		QDF_MAC_ADDR_ARRAY(buf->sa.bytes),
 		qdf_dp_dir_to_str(buf->dir), QDF_MAC_ADDR_ARRAY(buf->da.bytes));
+#endif
 }
 qdf_export_symbol(qdf_dp_display_proto_pkt);
 
