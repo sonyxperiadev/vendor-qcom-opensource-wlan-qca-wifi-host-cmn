@@ -569,9 +569,6 @@ QDF_STATUS wmi_unified_roam_scan_offload_mode_cmd(void *wmi_hdl,
 				struct roam_offload_scan_params *roam_req);
 #endif
 
-QDF_STATUS wmi_unified_roam_mawc_params_cmd(void *wmi_hdl,
-			struct wmi_mawc_roam_params *params);
-
 QDF_STATUS wmi_unified_roam_scan_offload_rssi_thresh_cmd(void *wmi_hdl,
 				struct roam_offload_scan_rssi_params *roam_req);
 
@@ -622,9 +619,6 @@ QDF_STATUS wmi_unified_pno_start_cmd(void *wmi_hdl,
 		   struct pno_scan_req_params *pno,
 		   uint32_t *gchannel_freq_list);
 #endif
-
-QDF_STATUS wmi_unified_nlo_mawc_cmd(void *wmi_hdl,
-		struct nlo_mawc_params *params);
 
 QDF_STATUS wmi_unified_set_ric_req_cmd(void *wmi_hdl, void *msg,
 			uint8_t is_add_ts);
@@ -752,6 +746,19 @@ QDF_STATUS wmi_unified_add_clear_mcbc_filter_cmd(void *wmi_hdl,
 					 uint8_t vdev_id,
 					 struct qdf_mac_addr multicast_addr,
 					 bool clearList);
+
+/**
+ * wmi_unified_multiple_add_clear_mcbc_filter_cmd() - send multiple mcast
+ *						      filter command to fw
+ * @wmi_handle: wmi handle
+ * @vdev_id: vdev id
+ * @mcast_filter_params: mcast filter params
+ *
+ * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
+ */
+QDF_STATUS wmi_unified_multiple_add_clear_mcbc_filter_cmd(void *wmi_hdl,
+				uint8_t vdev_id,
+				struct mcast_filter_params *filter_param);
 
 QDF_STATUS wmi_unified_send_gtk_offload_cmd(void *wmi_hdl, uint8_t vdev_id,
 					   struct gtk_offload_params *params,
@@ -903,8 +910,7 @@ QDF_STATUS wmi_unified_roam_scan_offload_cmd(void *wmi_hdl,
 
 #ifndef WMI_NON_TLV_SUPPORT
 QDF_STATUS wmi_unified_send_roam_scan_offload_ap_cmd(void *wmi_hdl,
-					    wmi_ap_profile *ap_profile_p,
-					    uint32_t vdev_id);
+				   struct ap_profile_params *ap_profile);
 #endif
 
 QDF_STATUS wmi_unified_roam_scan_offload_scan_period(void *wmi_hdl,
@@ -1387,6 +1393,18 @@ QDF_STATUS wmi_unified_set_arp_stats_req(void *wmi_hdl,
 					 struct set_arp_stats *req_buf);
 QDF_STATUS wmi_unified_get_arp_stats_req(void *wmi_hdl,
 					 struct get_arp_stats *req_buf);
+
+/**
+ * wmi_unified_send_action_oui_cmd() - send action oui cmd to fw
+ * @wmi_hdl: wma handle
+ * @action_oui: wmi action oui message to be send
+ *
+ * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
+ */
+QDF_STATUS
+wmi_unified_send_action_oui_cmd(void *wmi_hdl,
+				struct wmi_action_oui *action_oui);
+
 /*
  * wmi_unified_set_del_pmkid_cache() - set delete PMKID
  * @wmi_hdl: wma handle
@@ -1439,4 +1457,28 @@ QDF_STATUS wmi_unified_send_dbs_scan_sel_params_cmd(void *wmi_hdl,
 
 QDF_STATUS wmi_unified_send_limit_off_chan_cmd(void *wmi_hdl,
 				   struct wmi_limit_off_chan_param *wmi_param);
+
+/**
+ * wmi_unified_offload_11k_cmd() - send 11k offload command
+ * @wmi_hdl: wmi handle
+ * @params: 11k offload params
+ *
+ * This function passes the 11k offload command params to FW
+ *
+ * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
+ */
+QDF_STATUS wmi_unified_offload_11k_cmd(void *wmi_hdl,
+				struct wmi_11k_offload_params *params);
+
+/**
+ * wmi_unified_invoke_neighbor_report_cmd() - send invoke neighbor report cmd
+ * @wmi_hdl: wmi handle
+ * @params: invoke neighbor report params
+ *
+ * This function passes the invoke neighbor report command to fw
+ *
+ * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
+ */
+QDF_STATUS wmi_unified_invoke_neighbor_report_cmd(void *wmi_hdl,
+			struct wmi_invoke_neighbor_report_params *params);
 #endif /* _WMI_UNIFIED_API_H_ */

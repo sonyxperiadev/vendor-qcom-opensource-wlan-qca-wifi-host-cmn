@@ -1617,17 +1617,6 @@ QDF_STATUS wmi_unified_roam_scan_offload_rssi_thresh_cmd(void *wmi_hdl,
 	return QDF_STATUS_E_FAILURE;
 }
 
-QDF_STATUS wmi_unified_roam_mawc_params_cmd(
-			void *wmi_hdl, struct wmi_mawc_roam_params *params)
-{
-	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
-
-	if (wmi_handle->ops->send_roam_mawc_params_cmd)
-		return wmi_handle->ops->send_roam_mawc_params_cmd(
-				wmi_handle, params);
-
-	return QDF_STATUS_E_FAILURE;
-}
 /**
  * wmi_unified_roam_scan_filter_cmd() - send roam scan whitelist,
  *                                      blacklist and preferred list
@@ -1906,24 +1895,6 @@ QDF_STATUS wmi_unified_pno_start_cmd(void *wmi_hdl,
 	return QDF_STATUS_E_FAILURE;
 }
 #endif
-
-/**
- * wmi_unified_nlo_mawc_cmd() - NLO MAWC cmd configuration
- * @wmi_hdl: wmi handle
- * @params: Configuration parameters
- *
- * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
- */
-QDF_STATUS wmi_unified_nlo_mawc_cmd(void *wmi_hdl,
-		struct nlo_mawc_params *params)
-{
-	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
-
-	if (wmi_handle->ops->send_nlo_mawc_cmd)
-		return wmi_handle->ops->send_nlo_mawc_cmd(wmi_handle, params);
-
-	return QDF_STATUS_E_FAILURE;
-}
 
 /* wmi_unified_set_ric_req_cmd() - set ric request element
  * @wmi_hdl: wmi handle
@@ -2652,6 +2623,19 @@ QDF_STATUS wmi_unified_add_clear_mcbc_filter_cmd(void *wmi_hdl,
 	return QDF_STATUS_E_FAILURE;
 }
 
+QDF_STATUS wmi_unified_multiple_add_clear_mcbc_filter_cmd(void *wmi_hdl,
+				     uint8_t vdev_id,
+				     struct mcast_filter_params *filter_param)
+{
+	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
+
+	if (wmi_handle->ops->send_multiple_add_clear_mcbc_filter_cmd)
+		return wmi_handle->ops->send_multiple_add_clear_mcbc_filter_cmd(
+				wmi_handle, vdev_id, filter_param);
+
+	return QDF_STATUS_E_FAILURE;
+}
+
 /**
  * wmi_unified_send_gtk_offload_cmd() - send GTK offload command to fw
  * @wmi_handle: wmi handle
@@ -2957,29 +2941,6 @@ QDF_STATUS wmi_unified_update_tdls_peer_state_cmd(void *wmi_hdl,
 	if (wmi_handle->ops->send_update_tdls_peer_state_cmd)
 		return wmi_handle->ops->send_update_tdls_peer_state_cmd(wmi_handle,
 			    peerStateParams, ch_mhz);
-
-	return QDF_STATUS_E_FAILURE;
-}
-
-/**
- * wmi_unified_process_fw_mem_dump_cmd() - Function to request fw memory dump from
- * firmware
- * @wmi_handle:         Pointer to wmi handle
- * @mem_dump_req:       Pointer for mem_dump_req
- *
- * This function sends memory dump request to firmware
- *
- * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
- *
- */
-QDF_STATUS wmi_unified_process_fw_mem_dump_cmd(void *wmi_hdl,
-					struct fw_dump_req_param *mem_dump_req)
-{
-	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
-
-	if (wmi_handle->ops->send_process_fw_mem_dump_cmd)
-		return wmi_handle->ops->send_process_fw_mem_dump_cmd(wmi_handle,
-			    mem_dump_req);
 
 	return QDF_STATUS_E_FAILURE;
 }
@@ -3441,22 +3402,20 @@ QDF_STATUS wmi_unified_roam_scan_offload_cmd(void *wmi_hdl,
 /**
  * wmi_unified_send_roam_scan_offload_ap_cmd() - set roam ap profile in fw
  * @wmi_hdl: wmi handle
- * @ap_profile_p: ap profile
- * @vdev_id: vdev id
+ * @ap_profile: ap profile params
  *
  * Send WMI_ROAM_AP_PROFILE to firmware
  *
  * Return: QDF_STATUS_SUCCESS on success and QDF_STATUS_E_FAILURE for failure
  */
 QDF_STATUS wmi_unified_send_roam_scan_offload_ap_cmd(void *wmi_hdl,
-					    wmi_ap_profile *ap_profile_p,
-					    uint32_t vdev_id)
+					   struct ap_profile_params *ap_profile)
 {
 	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
 
 	if (wmi_handle->ops->send_roam_scan_offload_ap_profile_cmd)
-		return wmi_handle->ops->send_roam_scan_offload_ap_profile_cmd(wmi_handle,
-				  ap_profile_p, vdev_id);
+		return wmi_handle->ops->send_roam_scan_offload_ap_profile_cmd(
+				  wmi_handle, ap_profile);
 
 	return QDF_STATUS_E_FAILURE;
 }
@@ -6400,6 +6359,19 @@ QDF_STATUS wmi_unified_send_dbs_scan_sel_params_cmd(void *wmi_hdl,
 	return QDF_STATUS_E_FAILURE;
 }
 
+QDF_STATUS
+wmi_unified_send_action_oui_cmd(void *wmi_hdl,
+				struct wmi_action_oui *action_oui)
+{
+	wmi_unified_t wmi_handle = (wmi_unified_t)wmi_hdl;
+
+	if (wmi_handle->ops->send_action_oui_cmd)
+		return wmi_handle->ops->send_action_oui_cmd(wmi_handle,
+							    action_oui);
+
+	return QDF_STATUS_E_FAILURE;
+}
+
 /**
  * wmi_unified_send_limit_off_chan_cmd() - send wmi cmd of limit off channel
  * configuration params
@@ -6416,6 +6388,30 @@ QDF_STATUS wmi_unified_send_limit_off_chan_cmd(void *wmi_hdl,
 	if (wmi_handle->ops->send_limit_off_chan_cmd)
 		return wmi_handle->ops->send_limit_off_chan_cmd(wmi_handle,
 				limit_off_chan_param);
+
+	return QDF_STATUS_E_FAILURE;
+}
+
+QDF_STATUS wmi_unified_offload_11k_cmd(void *wmi_hdl,
+				struct wmi_11k_offload_params *params)
+{
+	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
+
+	if (wmi_handle->ops->send_offload_11k_cmd)
+		return wmi_handle->ops->send_offload_11k_cmd(
+				wmi_handle, params);
+
+	return QDF_STATUS_E_FAILURE;
+}
+
+QDF_STATUS wmi_unified_invoke_neighbor_report_cmd(void *wmi_hdl,
+			struct wmi_invoke_neighbor_report_params *params)
+{
+	wmi_unified_t wmi_handle = (wmi_unified_t) wmi_hdl;
+
+	if (wmi_handle->ops->send_invoke_neighbor_report_cmd)
+		return wmi_handle->ops->send_invoke_neighbor_report_cmd(
+				wmi_handle, params);
 
 	return QDF_STATUS_E_FAILURE;
 }
