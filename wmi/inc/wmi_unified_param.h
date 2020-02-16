@@ -6038,6 +6038,7 @@ typedef enum {
 	wmi_service_vdev_latency_config,
 	wmi_service_sta_plus_sta_support,
 	wmi_service_tx_compl_tsf64,
+	wmi_service_three_way_coex_config_legacy,
 	wmi_services_max,
 } wmi_conv_service_ids;
 #define WMI_SERVICE_UNAVAILABLE 0xFFFF
@@ -6156,6 +6157,7 @@ struct wmi_host_fw_abi_ver {
  * @twt_ap_pdev_count: Number of MAC on which AP TWT feature is supported
  * @twt_ap_sta_count: Max no of STA with which TWT sessions can be formed
  *                    by the AP
+ * @three_way_coex_config_legacy_en: enable three way coex legacy feature
  */
 typedef struct {
 	uint32_t num_vdevs;
@@ -6233,6 +6235,7 @@ typedef struct {
 	uint32_t twt_ap_pdev_count;
 	uint32_t twt_ap_sta_count;
 	bool tstamp64_en;
+	bool three_way_coex_config_legacy_en;
 } target_resource_config;
 
 /**
@@ -8793,5 +8796,51 @@ struct mws_antenna_sharing_info {
 	uint32_t imbalance;
 	int32_t  mrc_threshold;
 	uint32_t grant_duration;
+};
+
+/**
+ * enum roam_control_trigger_reason - Bitmap of roaming triggers
+ *
+ * @ROAM_TRIGGER_REASON_PER: Set if the roam has to be triggered based on
+ *     a bad packet error rates (PER).
+ * @ROAM_TRIGGER_REASON_BEACON_MISS: Set if the roam has to be triggered
+ *     based on beacon misses from the connected AP.
+ * @ROAM_TRIGGER_REASON_POOR_RSSI: Set if the roam has to be triggered
+ *     due to poor RSSI of the connected AP.
+ * @ROAM_TRIGGER_REASON_BETTER_RSSI: Set if the roam has to be triggered
+ *     upon finding a BSSID with a better RSSI than the connected BSSID.
+ *     Here the RSSI of the current BSSID need not be poor.
+ * @ROAM_TRIGGER_REASON_PERIODIC: Set if the roam has to be triggered
+ *     by triggering a periodic scan to find a better AP to roam.
+ * @ROAM_TRIGGER_REASON_DENSE: Set if the roam has to be triggered
+ *     when the connected channel environment is too noisy/congested.
+ * @ROAM_TRIGGER_REASON_BTM: Set if the roam has to be triggered
+ *     when BTM Request frame is received from the connected AP.
+ * @ROAM_TRIGGER_REASON_BSS_LOAD: Set if the roam has to be triggered
+ *     when the channel utilization is goes above the configured threshold.
+ *
+ * Set the corresponding roam trigger reason bit to consider it for roam
+ * trigger.
+ */
+enum roam_control_trigger_reason {
+	ROAM_CONTROL_TRIGGER_REASON_PER			= 1 << 0,
+	ROAM_CONTROL_TRIGGER_REASON_BEACON_MISS		= 1 << 1,
+	ROAM_CONTROL_TRIGGER_REASON_POOR_RSSI		= 1 << 2,
+	ROAM_CONTROL_TRIGGER_REASON_BETTER_RSSI		= 1 << 3,
+	ROAM_CONTROL_TRIGGER_REASON_PERIODIC		= 1 << 4,
+	ROAM_CONTROL_TRIGGER_REASON_DENSE		= 1 << 5,
+	ROAM_CONTROL_TRIGGER_REASON_BTM			= 1 << 6,
+	ROAM_CONTROL_TRIGGER_REASON_BSS_LOAD		= 1 << 7,
+};
+
+/**
+ * struct roam_triggers - vendor configured roam triggers
+ * @vdev_id: vdev id
+ * @trigger_bitmap: vendor configured roam trigger bitmap as
+ *		    defined @enum roam_control_trigger_reason
+ */
+struct roam_triggers {
+	uint32_t vdev_id;
+	uint32_t trigger_bitmap;
 };
 #endif /* _WMI_UNIFIED_PARAM_H_ */
