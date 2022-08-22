@@ -118,9 +118,11 @@ void hif_record_ce_srng_desc_event(struct hif_softc *scn, int ce_id,
 		qdf_mem_copy(&event->descriptor, descriptor,
 			     hal_get_entrysize_from_srng(hal_ring));
 
+#ifndef HELIUMPLUS
 	if (hal_ring)
 		hal_get_sw_hptp(scn->hal_soc, hal_ring, &event->current_tp,
 				&event->current_hp);
+#endif
 
 	event->memory = memory;
 	event->index = index;
