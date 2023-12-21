@@ -28,7 +28,7 @@
 
 #ifdef IPA_OFFLOAD
 	#ifdef CONFIG_ARCH_KALAMA
-		#include "../../../../dataipa/drivers/platform/msm/ipa/ipa_test_module/ipa_test_module.h"
+		#include "../../../../../../techpack/dataipa/drivers/platform/msm/ipa/ipa_test_module/ipa_test_module.h"
 		#ifndef IPA_WDI_OPT_DPATH
 			#undef IPA_OFFLOAD
 			#undef IPA_OPT_WIFI_DP
