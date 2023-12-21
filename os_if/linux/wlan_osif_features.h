@@ -54,8 +54,7 @@
  * https://android-review.googlesource.com/c/kernel/common/+/1996268
  */
 
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
 	(LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0))) || \
 	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 18, 0))
 #define CFG80211_11BE_BASIC 1
@@ -75,8 +74,7 @@
  * https://android-review.googlesource.com/c/kernel/common/+/1958440
  */
 
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
 	(LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0))) || \
 	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 17, 0))
 #define CFG80211_SA_QUERY_OFFLOAD_SUPPORT 1
@@ -109,11 +107,8 @@
  * https://android-review.googlesource.com/c/kernel/common/+/2115621
  *
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
-	(defined  IEEE80211_MLD_MAX_NUM_LINKS))
+
 #define CFG80211_SINGLE_NETDEV_MULTI_LINK_SUPPORT 1
-#endif
 
 /**
  * CFG80211_SAE_AUTH_TA_ADDR_SUPPORT
@@ -123,8 +118,7 @@
  * TODO: These changes are currently in internal review once upstreamed and
  * backported to 5.15 need to add the respective commit-ids
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
 	(defined  CFG80211_EXTERNAL_AUTH_TA_SUPPORT))
 #define CFG80211_SAE_AUTH_TA_ADDR_SUPPORT 1
 #endif
@@ -137,8 +131,7 @@
  * This feature was backported to Android Common Kernel 5.15 via:
  * https://android-review.googlesource.com/c/kernel/common/+/2115619
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
 	(LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0)))
 #define CFG80211_MULTI_AKM_CONNECT_SUPPORT 1
 #endif
@@ -147,8 +140,7 @@
  * WLAN_MLD_AP_STA_CONNECT_SUPPORT
  * Used to indicate Linux Kernel supports ML connection on SAP.
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
 	(defined CFG80211_MLD_AP_STA_CONNECT_SUPPORT))
 #define WLAN_MLD_AP_STA_CONNECT_SUPPORT 1
 #endif
@@ -158,8 +150,7 @@
  * Used to indicate Linux Kernel supports ML OWE connection
  * on SAP
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
 	(defined CFG80211_MLD_AP_OWE_INFO_SUPPORT))
 #define WLAN_MLD_AP_OWE_INFO_SUPPORT 1
 #endif
@@ -223,8 +214,7 @@
  * https://android-review.googlesource.com/c/kernel/common/+/2267210
  */
 
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 74)) || \
+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 74)) || \
 	(defined IEEE80211_EHT_OPER_INFO_PRESENT))
 #define CFG80211_TX_CONTROL_PORT_LINK_SUPPORT 1
 #endif
