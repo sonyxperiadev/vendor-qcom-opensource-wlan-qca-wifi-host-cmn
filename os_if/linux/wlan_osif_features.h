@@ -31,8 +31,7 @@
  * Used to indicate the Linux Kernel contains support for single netdevice multi
  * link support.
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0) && \
 	(defined  IEEE80211_MLD_MAX_NUM_LINKS))
 #define CFG80211_SINGLE_NETDEV_MULTI_LINK_SUPPORT 1
 #endif
@@ -96,8 +95,7 @@
  * https://android-review.googlesource.com/c/kernel/common/+/2267210
  */
 
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 74)) || \
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 74) || \
 	(defined IEEE80211_EHT_OPER_INFO_PRESENT))
 #define CFG80211_TX_CONTROL_PORT_LINK_SUPPORT 1
 #endif
@@ -106,8 +104,7 @@
  * WLAN_MLD_AP_STA_CONNECT_SUPPORT
  * Used to indicate Linux Kernel supports ML connection on SAP.
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0) && \
 	(defined CFG80211_MLD_AP_STA_CONNECT_SUPPORT))
 #define WLAN_MLD_AP_STA_CONNECT_SUPPORT 1
 #endif
@@ -117,8 +114,7 @@
  * Used to indicate Linux Kernel supports ML OWE connection
  * on SAP
  */
-#if (defined(__ANDROID_COMMON_KERNEL__) && \
-	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0) && \
 	(defined CFG80211_MLD_AP_OWE_INFO_SUPPORT))
 #define WLAN_MLD_AP_OWE_INFO_SUPPORT 1
 #endif
@@ -140,9 +136,8 @@
  * https://android-review.googlesource.com/c/kernel/common/+/2470891
  */
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 4, 0) || \
-	(defined(__ANDROID_COMMON_KERNEL__) && \
 	(LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && \
-	(defined CFG80211_MLD_AP_STA_CONNECT_UPSTREAM_SUPPORT)))
+	(defined CFG80211_MLD_AP_STA_CONNECT_UPSTREAM_SUPPORT))
 #define WLAN_MLD_AP_STA_CONNECT_UPSTREAM_SUPPORT 1
 #endif
 
